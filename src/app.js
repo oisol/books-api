@@ -54,6 +54,18 @@ app.put('/livros/:id', (req, res) => {
     res.json(livros)
 });
 
+// Rota de EXCLUIR livros
+app.delete('/livros/:id', (req, res) => {
+    // Variavel que pega id por desestruturação
+    let {id} = req.params;
+    // Usa o id passado no parametro
+    let index = buscaLivro(id);
+    // Apagar via splice, com parametros de index e quantas exclusões serão feitas
+    livros.splice(index, 1)
+    // Retornar lista atualizada
+    res.send(`Livro ${id} removido com sucesso`);
+});
+
 // Funçoes
 const buscaLivro = (id) => {
     return (
