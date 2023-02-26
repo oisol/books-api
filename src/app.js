@@ -1,17 +1,18 @@
 import express from 'express';
 import db from './config/dbConnect.js';
 import livros from './models/Book.js'
+import routes from './routes/index.js';
 
 db.on("error", console.log.bind(console, 'Erro de conexão'));
-
 db.once("open", () => {
     console.log("conexão com banco de dados feita com sucesso")
 });
 
 const app = express();
-
 // Ler o que é passado via json
 app.use(express.json());
+
+routes(app);
 
 // Mock temporario
 // const livros = [
@@ -24,23 +25,6 @@ app.use(express.json());
 //         'titulo': 'o hobbit'
 //     }
 // ];
-
-// Home
-app.get('/', (req, res) => {
-    res.status(200)
-        .send('HOME')
-});
-
-// Rota de RETORNAR livros
-app.get('/livros', (req, res) => {
-    // query no mongo
-    livros.find((err, livros) => {
-        res.status(200)
-            .json(livros)
-    })
-
-
-});
 
 // Rota de RETORNAR POR ID 
 app.get('/livros/:id', (req, res) => {
