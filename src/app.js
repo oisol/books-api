@@ -1,5 +1,6 @@
 import express from 'express';
 import db from './config/dbConnect.js';
+import livros from './models/Book.js'
 
 db.on("error", console.log.bind(console, 'Erro de conexão'));
 
@@ -13,16 +14,16 @@ const app = express();
 app.use(express.json());
 
 // Mock temporario
-const livros = [
-    {
-        id: 1,
-        'titulo': 'senhor dos aneis'
-    },
-    {
-        id: 2,
-        'titulo': 'o hobbit'
-    }
-];
+// const livros = [
+//     {
+//         id: 1,
+//         'titulo': 'senhor dos aneis'
+//     },
+//     {
+//         id: 2,
+//         'titulo': 'o hobbit'
+//     }
+// ];
 
 // Home
 app.get('/', (req, res) => {
@@ -32,8 +33,13 @@ app.get('/', (req, res) => {
 
 // Rota de RETORNAR livros
 app.get('/livros', (req, res) => {
-    res.status(200)
-        .json(livros)
+    // query no mongo
+    livros.find((err, livros) => {
+        res.status(200)
+            .json(livros)
+    })
+
+
 });
 
 // Rota de RETORNAR POR ID 
