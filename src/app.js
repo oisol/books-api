@@ -34,13 +34,6 @@ app.get('/livros/:id', (req, res) => {
     res.json(livros[index])
 });
 
-// Rota de CRIAR livros
-app.post('/livros', (req, res) => {
-    livros.push(req.body);
-    res.status(201)
-        .send('Livro cadastrado com sucesso!');
-});
-
 // Rota de ATUALIZAR livros
 app.put('/livros/:id', (req, res) => {
     // Usa o id passado no parametro
